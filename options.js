@@ -19,6 +19,7 @@ function displayBookmarks() {
 
         // Start bookmarks list
         var root_ul = document.createElement('UL');
+        root_ul.classList.add('list');
         display.appendChild(root_ul);
 
         populateBookmarkList(root_node, root_ul, 0);
@@ -30,6 +31,7 @@ function displayBookmarks() {
 function populateBookmarkList(node, list, num) {
     var node_title = document.createTextNode(node.title + ' ' + num);
     var list_item = document.createElement('LI');
+    list_item.classList.add('list-item');
     list.appendChild(list_item);
     var checkbox = document.createElement('INPUT');
     checkbox.type = 'checkbox';
@@ -40,11 +42,13 @@ function populateBookmarkList(node, list, num) {
         // Start a new list
         var child_list = document.createElement('UL');
         child_list.classList.add('hide');
+        child_list.classList.add('list');
         list.appendChild(child_list);
 
         // Add expand on click
         var show_more = document.createElement('BUTTON');
         show_more.textContent = '+';
+        show_more.classList.add('plus');
         show_more.onmousedown = createExpander(child_list);
         list_item.appendChild(show_more)
 
@@ -54,19 +58,22 @@ function populateBookmarkList(node, list, num) {
     }
 
     list_item.appendChild(checkbox);
-    list_item.appendChild(checkbox);
     list_item.appendChild(node_title);
 }
 
 function createExpander(child_list) {
     return function() {
         expandChildren(child_list);
-        if (this.textContent == '+') {
-            this.textContent = '-';
-        }
-        else {
-            this.textContent = '+';
-        }
+        togglePlus(this);
+    }
+}
+
+function togglePlus(button) {
+    if (button.textContent == '+') {
+        button.textContent = '-';
+    }
+    else {
+        button.textContent = '+';
     }
 }
 

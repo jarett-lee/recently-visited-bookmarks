@@ -1,3 +1,25 @@
 .hide {
     display: none;
 }
+
+.plus {
+    height: 12px;
+    width: 12px;
+    background-color: white;
+    color: black;
+    padding: 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px 0px;
+    outline: none;
+    border: 0;
+}
+
+.list {
+    list-style-type: none;
+}
+
+.list-item {
+}
