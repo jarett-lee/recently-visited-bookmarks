@@ -21,16 +21,18 @@ function displayBookmarks() {
         var root_ul = document.createElement('UL');
         display.appendChild(root_ul);
 
-        populateList(root_node, root_ul, 0);
+        populateBookmarkList(root_node, root_ul, 0);
 
     });
 }
 
-function populateList(node, list, num) {
+// Recursively adds bookmark node titles to an expandable list
+function populateBookmarkList(node, list, num) {
     var node_title = document.createTextNode(node.title + ' ' + num);
     var list_item = document.createElement('LI');
-    list_item.appendChild(node_title);
     list.appendChild(list_item);
+    var checkbox = document.createElement('INPUT');
+    checkbox.type = 'checkbox';
 
     if (node.children) {
         // The node is a branch
@@ -41,17 +43,30 @@ function populateList(node, list, num) {
         list.appendChild(child_list);
 
         // Add expand on click
-        list_item.onmousedown = createExpander(child_list);
+        var show_more = document.createElement('BUTTON');
+        show_more.textContent = '+';
+        show_more.onmousedown = createExpander(child_list);
+        list_item.appendChild(show_more)
 
         node.children.forEach(function(child_node, list_num) {
-            populateList(child_node, child_list, list_num);
+            populateBookmarkList(child_node, child_list, list_num);
         });
     }
+
+    list_item.appendChild(checkbox);
+    list_item.appendChild(checkbox);
+    list_item.appendChild(node_title);
 }
 
 function createExpander(child_list) {
     return function() {
         expandChildren(child_list);
+        if (this.textContent == '+') {
+            this.textContent = '-';
+        }
+        else {
+            this.textContent = '+';
+        }
     }
 }
 
