@@ -1,9 +1,12 @@
+var sort_bookmarks;
+
 // Saves options to chrome.storage
 function saveOptions() {
-    sort_bookmarks.sort();
+    sort_bookmarks.sort(function(a, b) {
+        return a > b;
+    });
     chrome.storage.sync.set({'settings': sort_bookmarks}, function() {
         statusMessage('settings saved');
-        console.log(sort_bookmarks);
     });
 }
 
@@ -88,16 +91,16 @@ function populateBookmarkList(node, list, num) {
 
 function createAddToSort(bookmark) {
     return function() {
+        var numId = parseInt(bookmark.id);
         if (this.checked) {
-            sort_bookmarks.push(bookmark.id);
+            sort_bookmarks.push(numId);
         }
         else {
-            var index = sort_bookmarks.indexOf(bookmark.id);
+            var index = sort_bookmarks.indexOf(numId);
             if (index > -1) {
                 sort_bookmarks.splice(index, 1);
             }
         }
-        console.log(sort_bookmarks);
     }
 }
 
