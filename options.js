@@ -1,3 +1,5 @@
+var sort_bookmarks = [];
+
 // Saves options to chrome.storage
 function saveOptions() {
     // TODO
@@ -35,6 +37,7 @@ function populateBookmarkList(node, list, num) {
     list.appendChild(list_item);
     var checkbox = document.createElement('INPUT');
     checkbox.type = 'checkbox';
+    checkbox.onclick = createAddToSort(node);
 
     if (node.children) {
         // The node is a branch
@@ -59,6 +62,21 @@ function populateBookmarkList(node, list, num) {
 
     list_item.appendChild(checkbox);
     list_item.appendChild(node_title);
+}
+
+function createAddToSort(bookmark) {
+    return function() {
+        if (this.checked) {
+            sort_bookmarks.push(bookmark.id);
+        }
+        else {
+            var index = sort_bookmarks.indexOf(bookmark.id);
+            if (index > -1) {
+                sort_bookmarks.splice(index, 1);
+            }
+        }
+        console.log(sort_bookmarks);
+    }
 }
 
 function createExpander(child_list) {
