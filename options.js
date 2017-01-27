@@ -1,9 +1,8 @@
-var sort_bookmarks = [];
-
 // Saves options to chrome.storage
 function saveOptions() {
     chrome.storage.sync.set({'settings': sort_bookmarks}, function() {
         statusMessage('settings saved');
+        console.log(sort_bookmarks);
     });
 }
 
@@ -18,7 +17,17 @@ function statusMessage(text) {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restoreOptions() {
-    // TODO
+    chrome.storage.sync.get('settings', function(items) {
+        if (items.settings) {
+            sort_bookmarks = items.settings;
+        }
+        else {
+            sort_bookmarks = [];
+        }
+        var save = document.getElementById('save');
+        save.disabled = false;
+        displayBookmarks();
+    });
 }
 
 // Displays all the bookmarks the user currently has with a checkbox
@@ -45,9 +54,6 @@ function populateBookmarkList(node, list, num) {
     var list_item = document.createElement('LI');
     list_item.classList.add('list-item');
     list.appendChild(list_item);
-    var checkbox = document.createElement('INPUT');
-    checkbox.type = 'checkbox';
-    checkbox.onclick = createAddToSort(node);
 
     if (node.children) {
         // The node is a branch
@@ -65,12 +71,17 @@ function populateBookmarkList(node, list, num) {
         show_more.onmousedown = createExpander(child_list);
         list_item.appendChild(show_more)
 
+        // Add checkbox
+        var checkbox = document.createElement('INPUT');
+        checkbox.type = 'checkbox';
+        checkbox.onclick = createAddToSort(node);
+        list_item.appendChild(checkbox);
+
         node.children.forEach(function(child_node, list_num) {
             populateBookmarkList(child_node, child_list, list_num);
         });
     }
 
-    list_item.appendChild(checkbox);
     list_item.appendChild(node_title);
 }
 
@@ -109,5 +120,5 @@ function expandChildren(child_list) {
     child_list.classList.toggle('hide');
 }
 
-document.addEventListener('DOMContentLoaded', displayBookmarks);
+document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
