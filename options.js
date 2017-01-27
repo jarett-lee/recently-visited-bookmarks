@@ -2,7 +2,17 @@ var sort_bookmarks = [];
 
 // Saves options to chrome.storage
 function saveOptions() {
-    // TODO
+    chrome.storage.sync.set({'settings': sort_bookmarks}, function() {
+        statusMessage('settings saved');
+    });
+}
+
+function statusMessage(text) {
+    var status = document.getElementById('status');
+    status.textContent = text;
+    var clear_timer = setTimeout(function() {
+        status.textContent = '';
+    }, 750);
 }
 
 // Restores select box and checkbox state using the preferences
