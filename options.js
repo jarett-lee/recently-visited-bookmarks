@@ -1,5 +1,6 @@
 // Saves options to chrome.storage
 function saveOptions() {
+    sort_bookmarks.sort();
     chrome.storage.sync.set({'settings': sort_bookmarks}, function() {
         statusMessage('settings saved');
         console.log(sort_bookmarks);
