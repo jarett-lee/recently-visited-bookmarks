@@ -81,6 +81,12 @@ function populateBookmarkList(node, list, num) {
         checkbox.onclick = createAddToSort(node);
         list_item.appendChild(checkbox);
 
+        // Check the box if the program is in the settings
+        // List should be just loaded from chrome sync and there sorted
+        if (binarySearch(node.id, sort_bookmarks) != -1) {
+            checkbox.checked = true;
+        }
+
         node.children.forEach(function(child_node, list_num) {
             populateBookmarkList(child_node, child_list, list_num);
         });
