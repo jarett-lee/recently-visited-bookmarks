@@ -1,1 +1,6 @@
+# image editing files
 ignore/*
+
+# sass
+.sass-cache/
+*.css.map

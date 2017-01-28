@@ -1,29 +1,87 @@
+.noselect, .bookmark-tree {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+     supported by Chrome and Opera */ }
+
+/* scoll prevents window from shifting after expanding the list */
+html {
+  overflow-y: scroll; }
+
+body {
+  font-size: 16px;
+  background-color: #F0F0F0; }
+
+.wrapper {
+  margin: auto;
+  width: 700px; }
+
+/* title */
+.title {
+  text-align: center; }
+
+/* options */
+.options {
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-color: #CFCFCF;
+  border-radius: 7px;
+  border-style: solid;
+  border-width: thin;
+  background-color: white; }
+  .options h2 {
+    margin-top: 0; }
+
+/* bookmark tree */
+.bookmark-tree {
+  border-radius: 5px;
+  border-style: solid;
+  border-width: thin;
+  padding: 10px; }
+  .bookmark-tree .list {
+    display: flex;
+    flex-direction: column; }
+  .bookmark-tree .list-item {
+    display: flex;
+    flex-direction: row;
+    height: 26px;
+    line-height: 26px; }
+    .bookmark-tree .list-item .spacer, .bookmark-tree .list-item .plus, .bookmark-tree .list-item .checkbox {
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 26px;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      border: 0;
+      text-align: center;
+      font-size: 12px; }
+    .bookmark-tree .list-item .plus {
+      background-color: lightgray; }
+    .bookmark-tree .list-item .checkbox {
+      background-color: darkgray; }
+    .bookmark-tree .list-item .text {
+      padding-left: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden; }
+  .bookmark-tree .list-item:hover {
+    cursor: pointer;
+    background-color: #D5D6FF; }
+
 .hide {
-    display: none;
-}
-
-.plus {
-    height: 24px;
-    width: 24px;
-    background-color: lightgray;
-    color: black;
-    padding: 0px 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 0px 0px;
-    outline: none;
-    border: 0;
-}
-
-.list {
-    list-style-type: none;
-}
-
-.list-item {
-}
+  display: none !important; }
 
 #status {
-    height: 12px;
-}
+  height: 12px; }
+
+/*# sourceMappingURL=options.css.map */

@@ -43,43 +43,82 @@ function displayBookmarks() {
         var root_node = result_arr[0];
 
         // Start bookmarks list
-        var root_ul = document.createElement('UL');
+        var root_ul = document.createElement('DIV');
         root_ul.classList.add('list');
         display.appendChild(root_ul);
 
-        populateBookmarkList(root_node, root_ul, 0);
+        populateBookmarkList(root_node, root_ul, 0, 0);
 
     });
 }
 
-// Recursively adds bookmark node titles to an expandable list
-function populateBookmarkList(node, list, num) {
-    var node_title = document.createTextNode(node.title + ' ' + num);
-    var list_item = document.createElement('LI');
+function createListSpacerElement() {
+    var spacer = document.createElement('DIV');
+    spacer.classList.add('spacer');
+    spacer.style.order = 0;
+    return spacer;
+}
+
+function createItemTextElement(text) {
+    var item_text = document.createElement('DIV');
+    item_text.classList.add('text');
+    item_text.textContent = text;
+    return item_text;
+}
+
+function createListItemElement(n_spacers, text) {
+    // <div class="list-item">
+    var list_item = document.createElement('DIV');
     list_item.classList.add('list-item');
+
+    // <div class="spacer">
+    var spacer;
+    for (var i = 0; i < n_spacers; i++) {
+        spacer = createListSpacerElement();
+        list_item.appendChild(spacer);
+    }
+
+    var item_text = createItemTextElement(text);
+    item_text.style.order = n_spacers + 3;
+    list_item.appendChild(item_text);
+
+    return list_item;
+}
+
+function createShowMoreFunction(list) {
+    var show_more = document.createElement('DIV');
+    show_more.classList.add('plus');
+    show_more.textContent = '+';
+    show_more.onmousedown = createExpander(list);
+    return show_more;
+}
+
+// Recursively adds bookmark node titles to an expandable list
+function populateBookmarkList(node, list, num, depth) {
+    // Create list item
+    var list_item = createListItemElement(depth, node.title + ' ' + num);
     list.appendChild(list_item);
+
+    // Add checkbox
+    var checkbox = document.createElement('INPUT');
+    checkbox.type = 'checkbox';
+    checkbox.onclick = createAddToSort(node);
+    checkbox.style.order = depth + 2;
+    list_item.appendChild(checkbox);
 
     if (node.children) {
         // The node is a branch
 
         // Start a new list
-        var child_list = document.createElement('UL');
-        child_list.classList.add('hide');
+        var child_list = document.createElement('DIV');
         child_list.classList.add('list');
+        child_list.classList.add('hide');
         list.appendChild(child_list);
 
         // Add expand on click
-        var show_more = document.createElement('BUTTON');
-        show_more.textContent = '+';
-        show_more.classList.add('plus');
-        show_more.onmousedown = createExpander(child_list);
-        list_item.appendChild(show_more)
-
-        // Add checkbox
-        var checkbox = document.createElement('INPUT');
-        checkbox.type = 'checkbox';
-        checkbox.onclick = createAddToSort(node);
-        list_item.appendChild(checkbox);
+        var show_more = createShowMoreFunction(child_list);
+        show_more.style.order = depth + 1;
+        list_item.appendChild(show_more);
 
         // Check the box if the program is in the settings
         // List should be just loaded from chrome sync and there sorted
@@ -88,11 +127,13 @@ function populateBookmarkList(node, list, num) {
         }
 
         node.children.forEach(function(child_node, list_num) {
-            populateBookmarkList(child_node, child_list, list_num);
+            populateBookmarkList(child_node, child_list, list_num, depth + 1);
         });
     }
-
-    list_item.appendChild(node_title);
+    else {
+        spacer = createListSpacerElement();
+        list_item.appendChild(spacer);
+    }
 }
 
 function createAddToSort(bookmark) {

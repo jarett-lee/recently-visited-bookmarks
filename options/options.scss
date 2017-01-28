@@ -1,0 +1,121 @@
+// options.scss
+
+@import 'noselect';
+
+/* scoll prevents window from shifting after expanding the list */
+html {
+    overflow-y: scroll;
+}
+
+body {
+    font-size: 16px;
+    background-color: #F0F0F0;
+}
+
+.wrapper {
+    margin: auto;
+    width: 700px;
+}
+
+/* title */
+
+.title {
+    text-align: center;
+}
+
+/* options */
+
+$options-border-radius: 7px;
+$options-horizontal-padding: 80px;
+$options-vertical-padding: 40px;
+
+.options {
+    padding-left: $options-horizontal-padding;
+    padding-right: $options-horizontal-padding;
+    padding-top: $options-vertical-padding;
+    padding-bottom: $options-vertical-padding;
+
+    border-color: #CFCFCF;
+    border-radius: $options-border-radius;
+    border-style: solid;
+    border-width: thin;
+
+    background-color: white;
+
+    h2 {
+        margin-top: 0;
+    }
+}
+
+/* bookmark tree */
+
+$list-line-height: 26px;
+$list-item-vertical-padding: 12px;
+
+.bookmark-tree {
+    @extend .noselect;
+
+    border-radius: 5px;
+    border-style: solid;
+    border-width: thin;
+
+    padding: 10px;
+
+    .list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-item {
+        display: flex;
+        flex-direction: row;
+
+        height: $list-line-height;
+        line-height: $list-line-height;
+        // padding-left: $list-item-vertical-padding;
+        // padding-right: $list-item-vertical-padding;
+
+        .spacer {
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: $list-line-height;
+
+            margin: 0;
+            padding: 0;
+            outline: none;
+            border: 0;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .plus {
+            @extend .spacer;
+            background-color: lightgray;
+        }
+
+        .checkbox {
+            @extend .spacer;
+            background-color: darkgray;
+        }
+
+        .text {
+            padding-left: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+
+    .list-item:hover {
+        cursor: pointer;
+        background-color: #D5D6FF;
+    }
+}
+
+.hide {
+    display: none !important;
+}
+
+#status {
+    height: 12px;
+}

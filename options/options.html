@@ -5,20 +5,31 @@
     <title>Options</title>
 
     <link rel="stylesheet" href="options.css" />
-
+    <link rel="stylesheet" href="optionsdebug.css" />
 </head>
 
 <body>
 
-    <p>Select the bookmarks that you want to automatically update.</p>
+    <div class="wrapper">
+        <div class="title">
+            <h1>ThatBookmarkExtension is great</h1>
+        </div>
 
-    <div id="display"></div>
+        <div class="options">
+            <h2>Options</h2>
 
-    <div id="status"></div>
-    <button id="save" disabled="true">Save</button>
+            <p>Select the bookmarks that you want to automatically update:</p>
 
-    <script src="../shared/util.js"></script>
-    <script src="options.js"></script>
+            <div id="display" class="bookmark-tree"></div>
+
+            <div id="status"></div>
+            <button id="save" disabled="true" role="button">Save</button>
+
+            <script src="../shared/util.js"></script>
+            <script src="options.js"></script>
+        </div>
+    </div>
+
 </body>
 
 </html>
